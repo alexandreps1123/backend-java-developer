@@ -27,3 +27,8 @@ boas práticas de arquitetura, organização de código, segurança, Docker e do
 - Classe de paginação (Util.class)
 
 - Classe modelo para chamadas externas (AbstractRequest<T>.class)
+
+## Documentação sobre o desenvolvimento
+
+- Criação do sql `V3__episode.sql`: os campos foram definidos de acordo com a especificação e com base nas outras tabelas do projeto.
+Os índices foram criados  visando escalabilidade do sistema, para melhorar a performance das consultas de episódios para um show específico (consulta mais comum).
