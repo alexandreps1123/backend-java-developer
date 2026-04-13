@@ -1,13 +1,12 @@
 package com.cmanager.app.integration.dto;
 
-import com.cmanager.app.authentication.data.UserDTO;
-import com.cmanager.app.authentication.domain.User;
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDateTime;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name = "ShowsDTO", description = "Objeto da representação de Shows")
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -47,7 +46,4 @@ public record EpisodeRequestDTO(
         @Schema(name = "summary", description = "Resumo")
         String summary
 ) {
-    public static UserDTO convertEntity(User u) {
-        return new UserDTO(u.getId(), u.getUsername(), u.getRole(), u.isEnabled());
-    }
 }
