@@ -4,11 +4,13 @@ import com.cmanager.app.core.data.ErrorResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -88,6 +90,27 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(error);
+    }
+
+    @ExceptionHandler(RestClientResponseException.class)
+    public ResponseEntity<ErrorResponse> handleRestClientResponseException(RestClientResponseException ex,
+                                                                          HttpServletRequest request) {
+        final HttpStatusCode status = ex.getStatusCode();
+        final String message = status.value() == HttpStatus.NOT_FOUND.value()
+                ? "Show não encontrado na API externa"
+                : "Erro API externa: " + status.value();
+
+        final var error = ErrorResponse.builder()
+                .message(message)
+                .path(request.getServletPath())
+                .status(status.value())
+                .error(status.toString())
+                .build();
+
+        return ResponseEntity
+                .status(status.value())
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(error);
     }
