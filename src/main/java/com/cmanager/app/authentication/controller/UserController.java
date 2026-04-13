@@ -85,7 +85,7 @@ public class UserController {
             summary = "create",
             description = "Registra um usuário",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário cadastrado com sucesso")
+                    @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
             }
     )
     @PostMapping
@@ -113,7 +113,7 @@ public class UserController {
             summary = "delete",
             description = "Remove um usuário",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Usuário removido com sucesso")
+                    @ApiResponse(responseCode = "204", description = "Usuário removido com sucesso")
             }
     )
     @DeleteMapping("/{id}")
