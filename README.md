@@ -67,3 +67,7 @@ Os índices foram criados  visando escalabilidade do sistema, para melhorar a pe
 - Correção testes em `AuthControllerIT` e `UserServiceIT`
 
 - Configuração do banco de dados no `docker-compose`
+
+- Desenvolvimento da feature de sincronizacao de TV `POST /api/shows`, só pode executado apenas por role ADMIN, consome API externa, pesquisando pelo nome do Show, persiste Show + Episodes não persistindo duplicatas de Show ou Episode.
+
+- Desenvolvimento da feature de listagem de shows `GET /api/shows`, para acessar o recurso é necessário estar autenticado, role ADMIN e USER podem acessar. O retorno está paginado e com ordenação por `name`, e é possível filtrar por nome, também.
