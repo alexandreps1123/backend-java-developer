@@ -71,3 +71,5 @@ Os índices foram criados  visando escalabilidade do sistema, para melhorar a pe
 - Desenvolvimento da feature de sincronizacao de TV `POST /api/shows`, só pode executado apenas por role ADMIN, consome API externa, pesquisando pelo nome do Show, persiste Show + Episodes não persistindo duplicatas de Show ou Episode.
 
 - Desenvolvimento da feature de listagem de shows `GET /api/shows`, para acessar o recurso é necessário estar autenticado, role ADMIN e USER podem acessar. O retorno está paginado e com ordenação por `name`, e é possível filtrar por nome, também.
+
+- Desenvolvimento da feature de média das notas dos episódios por temporada `GET /api/episodes/average`. Para acessar o recurso é necessário estar autenticado, role ADMIN e USER podem acessar. A busca é feita pelo nome do Show e devolve uma lista de temporadas do Show e a média das notas. Se não houver episódios é devolvido um erro.

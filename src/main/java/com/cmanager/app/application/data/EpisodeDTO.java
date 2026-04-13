@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(name = "ShowsDTO", description = "Objeto da representação de Shows")
+@Schema(name = "EpisodeDTO", description = "Objeto da representação de episodio")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record EpisodeDTO(
         @JsonProperty("id")

@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/shows")
 @Tag(
         name = "ShowController",
-        description = "API de sincronizacao de shows"
+        description = "API de shows"
 )
 public class ShowController {
 
@@ -47,7 +47,7 @@ public class ShowController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ShowDTO> sync(@RequestBody @Valid ShowCreateRequest req) {
-        final var dto = syncService.syncShow(req);
+        final ShowDTO dto = syncService.syncShow(req);
         return ResponseEntity.ok(dto);
     }
 
