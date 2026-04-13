@@ -1,14 +1,8 @@
 package com.cmanager.app.service;
 
-import com.cmanager.app.authentication.data.UserCreateRequest;
-import com.cmanager.app.authentication.data.UserUpdateRequest;
-import com.cmanager.app.authentication.domain.Role;
-import com.cmanager.app.authentication.domain.User;
-import com.cmanager.app.authentication.repository.UserRepository;
-import com.cmanager.app.authentication.service.UserService;
-import com.cmanager.app.config.AbstractPostgresContainerIT;
-import com.cmanager.app.core.exception.AlreadyExistsException;
-import com.cmanager.app.core.utils.Util;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +12,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import com.cmanager.app.authentication.data.UserCreateRequest;
+import com.cmanager.app.authentication.data.UserUpdateRequest;
+import com.cmanager.app.authentication.domain.Role;
+import com.cmanager.app.authentication.domain.User;
+import com.cmanager.app.authentication.repository.UserRepository;
+import com.cmanager.app.authentication.service.UserService;
+import com.cmanager.app.config.AbstractPostgresContainerIT;
+import com.cmanager.app.core.exception.AlreadyExistsException;
+import com.cmanager.app.core.utils.Util;
 
 @SpringBootTest
 @Transactional
@@ -49,7 +50,7 @@ class UserServiceIT extends AbstractPostgresContainerIT {
     }
 
     @Test
-    @DisplayName("create() salva, encoda senha e enabled default true quando null")
+    @DisplayName("create() salva, encoda senha e enabled default true quando null e lança exceção quando tenta adicionar o mesmo username")
     void create_ok() {
         var req = new UserCreateRequest("alice", "pwd", Role.USER, true);
         User saved = service.create(req);
@@ -60,8 +61,7 @@ class UserServiceIT extends AbstractPostgresContainerIT {
         assertThat(passwordEncoder.matches("pwd", saved.getPassword())).isTrue();
 
         var req2 = new UserCreateRequest("alice", "pwd", Role.USER, true);
-        User saved2 = service.create(req2);
-        assertThat(saved2.getId()).isNotNull();
+        assertThatThrownBy(() -> service.create(req2)).isInstanceOf(AlreadyExistsException.class);
     }
 
     @Test
